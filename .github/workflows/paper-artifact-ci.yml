@@ -3,8 +3,7 @@ name: Paper Artifact CI
 on:
   push:
     branches:
-      - paper-release-readiness-v1.1
-      - paper-math-alignment-v1.4
+      - main
   pull_request:
     paths:
       - "research_core/**"

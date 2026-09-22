@@ -1,6 +1,6 @@
 # Paper Release Readiness — v1.4 Corrective Research Release
 
-Target branch: `paper-math-alignment-v1.4`
+Review snapshot branch: `main`
 Previous frozen tag: `prior-anonymous-review-snapshot`
 Previous frozen commit: `prior-baseline-withheld-for-review`
 v1.4 corrective experimental baseline: `corrective-baseline-withheld-for-review`
