@@ -1,0 +1,140 @@
+openapi: 3.1.0
+info:
+  title: AIMS Lens Engine Research-Core API
+  version: 0.9.0-paper-readiness
+  description: >-
+    Candidate-side, institution-agnostic research API for Lens validation, routing,
+    interview-practice follow-up prioritization, and explanation provenance. This
+    paper API intentionally excludes employer-side candidate ranking, screening,
+    rejection, and hiring-decision endpoints.
+servers:
+  - url: http://127.0.0.1:8092
+paths:
+  /health:
+    get:
+      summary: Return research-core health and artifact version.
+      responses:
+        "200":
+          description: Health status.
+  /v1/lenses/validate:
+    post:
+      summary: Validate a versioned Lens against the public research schema and governance boundary.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [lens]
+              properties:
+                lens:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Validation result and any boundary violations.
+  /v1/route:
+    post:
+      summary: Select the highest-specificity authorized Lens or declared fallback for interview practice.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteRequest"
+      responses:
+        "200":
+          description: Routing provenance and selected practice context.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RouteResponse"
+  /v1/practice/followup-priority:
+    post:
+      summary: Return an ordered interview-practice follow-up priority under evidence and compatibility constraints.
+      description: >-
+        The output is a practice decision, not a prediction of a specific employer's
+        interview process or hiring decision. Numerical internal distributions are
+        diagnostic research outputs and must not be presented as employer-outcome probabilities.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/followup_priority_request.schema.json"
+      responses:
+        "200":
+          description: Ordered practice priority with uncertainty and routing provenance.
+          content:
+            application/json:
+              schema:
+                $ref: "../schemas/followup_priority_response.schema.json"
+  /v1/practice/explanation:
+    post:
+      summary: Generate a provenance-aware explanation for a previously computed practice priority.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [top_category, routing_provenance, evidence_maturity]
+              properties:
+                top_category:
+                  type: string
+                routing_provenance:
+                  type: array
+                  items:
+                    type: object
+                evidence_maturity:
+                  type: string
+                lens_type:
+                  type: string
+      responses:
+        "200":
+          description: Plain-language explanation with an explicit practice-only disclaimer.
+components:
+  schemas:
+    RouteRequest:
+      type: object
+      required: [role_context, use_case]
+      properties:
+        tenant:
+          type: string
+          description: Optional institutional namespace; not reference client-specific.
+        role_context:
+          type: object
+          additionalProperties: true
+        requested_lens_id:
+          type: string
+        use_case:
+          type: string
+          enum:
+            - interview_practice
+            - practice_answer_review
+            - practice_followup_selection
+            - research_simulation
+    RouteResponse:
+      type: object
+      required: [selected_lens_type, routing_level, evidence_maturity, explanation]
+      properties:
+        selected_lens_id:
+          type: string
+        selected_lens_type:
+          type: string
+          enum: [company, industry, derived, archetype, general_practice]
+        routing_level:
+          type: string
+          enum: [L0, L1, L2, L3, L4, L5]
+        backoff_distance:
+          type: integer
+          minimum: 0
+          maximum: 5
+        evidence_maturity:
+          type: string
+          enum: [exploratory, reviewed_practice, evaluation_ready, empirically_supported]
+        explanation:
+          type: string
+        disclaimer:
+          type: string
+          default: "Routing selects a practice context and does not predict a specific employer's behavior."

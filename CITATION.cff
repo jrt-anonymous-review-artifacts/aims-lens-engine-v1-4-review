@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: If you use this anonymous review snapshot, cite the manuscript under review.
+title: AIMS Lens Engine
+version: anonymous-v1.4-review
+date-released: 2026-09-22
+authors:
+  - name: Anonymous authors
+license: Apache-2.0
