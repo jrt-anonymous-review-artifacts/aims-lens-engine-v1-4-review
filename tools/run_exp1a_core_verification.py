@@ -271,7 +271,7 @@ def main() -> int:
 
     output = {
         "protocol_version": "0.1-pre-registered",
-        "experiment_base_commit": "4594b88ca9915c69e527ca5e52e8e733ad1752c7",
+        "experiment_base_commit": "historical-exp1a-baseline-withheld-for-review",
         "case_count": len(rows),
         "authorization_tv_from_baseline": auth_tv,
         "cases": rows,

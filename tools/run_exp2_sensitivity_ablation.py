@@ -560,7 +560,7 @@ def main() -> int:
 
     result = {
         "protocol_version": "0.1.1-reproducibility-amendment",
-        "experiment_base_commit": "ce3346642bc03a939115f506abada9443303438c",
+        "experiment_base_commit": "historical-exp2-baseline-withheld-for-review",
         "master_seed": MASTER_SEED,
         "replicates": REPLICATES,
         "sensitivity": {

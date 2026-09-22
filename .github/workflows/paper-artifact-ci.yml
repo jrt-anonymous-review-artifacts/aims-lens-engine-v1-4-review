@@ -1,42 +1,8 @@
 name: Paper Artifact CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    paths:
-      - "research_core/**"
-      - "schemas/**"
-      - "config/**"
-      - "tests/**"
-      - "examples/paper/**"
-      - "tools/run_paper_artifact_demo.py"
-      - "tools/run_exp1a_core_verification.py"
-      - "tools/run_exp1b_lens_differentiation.py"
-      - "tools/run_exp2_sensitivity_ablation.py"
-      - "tools/run_exp3_semantic_regression.py"
-      - "tools/run_exp4_adversarial_alignment.py"
-      - "tools/run_exp5_hierarchy_approximation.py"
-      - "tools/validate_paper_artifact.py"
-      - "tools/validate_documentation_alignment.py"
-      - "docs/PAPER_TO_CODE_MAP.md"
-      - "docs/MATH_TO_CODE_COMPLETENESS_AUDIT.md"
-      - "docs/IMPLEMENTATION_INTEGRATION_COVERAGE_MATRIX.md"
-      - "docs/experiments/**"
-      - "README.md"
-      - "README.zh-CN.md"
-      - "CHANGELOG.md"
-      - "VERSION"
-      - "CITATION.cff"
-      - "RESEARCH_BOUNDARY.md"
-      - "REPRODUCIBILITY.md"
-      - "PAPER_RELEASE_READINESS.md"
-      - "paper_artifact_manifest.yaml"
-      - "api/openapi.yaml"
-      - "architecture/**"
-      - "governance/**"
-      - ".github/workflows/paper-artifact-ci.yml"
+  # Manual only: public runs record the triggering account.
+  workflow_dispatch:
 
 jobs:
   validate:

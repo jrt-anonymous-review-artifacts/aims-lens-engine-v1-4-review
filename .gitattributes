@@ -1,0 +1,2 @@
+examples/paper/experiments/**/*.json text eol=lf
+examples/paper/experiments/**/*.csv text eol=lf
